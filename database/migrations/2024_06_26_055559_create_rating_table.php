@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('rating', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedInteger('rating')->nullable();
             $table->text('description')->nullable();
             $table->unsignedBigInteger('order_id');
-            $table->foreign('order_id')->references('id')->on('orders');
+            $table->foreign('order_id')->references('id')->on('order');
             $table->timestamps();
         });
     }
