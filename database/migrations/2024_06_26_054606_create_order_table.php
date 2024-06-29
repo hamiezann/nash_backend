@@ -11,26 +11,28 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_product', function (Blueprint $table) {
+        // First create the 'order' table
+        Schema::create('order', function (Blueprint $table) {
             $table->id();
-            $table->integer('quantity');
-            $table->decimal('price', 10, 2);
-            $table->unsignedBigInteger('product_ID');
-            $table->foreign('product_ID')->references('id')->on('product')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('order_status')->nullable();
+            $table->decimal('total_amount', 10, 2);
+            $table->string('order_address');
+            $table->unsignedBigInteger('payment_id');
+            $table->foreign('payment_id')->references('id')->on('payment')->onDelete('cascade');
             $table->timestamps();
         });
 
-        Schema::create('order', function (Blueprint $table) {
+        // Then create the 'order_product' table
+        Schema::create('order_product', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_productID');
-            $table->foreign('order_productID')->references('id')->on('order_product')->onDelete('cascade');
-            $table->string('order_status')->nullable();
-            $table->decimal('total_amount', 10, 2);
-            $table->unsignedBigInteger('user_ID');
-            $table->foreign('user_ID')->references('id')->on('users')->onDelete('cascade');
-            $table->string('order_address');
-            $table->unsignedBigInteger('payment_ID');
-            $table->foreign('payment_ID')->references('id')->on('payment')->onDelete('cascade');
+            $table->unsignedBigInteger('order_id');
+            $table->foreign('order_id')->references('id')->on('order')->onDelete('cascade');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade');
+            $table->integer('quantity');
+            $table->decimal('price', 10, 2);
             $table->timestamps();
         });
     }
