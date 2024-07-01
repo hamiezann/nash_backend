@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthenticationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,3 +26,14 @@ Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
 Route::post('/logout',[AuthenticationController::class,'logout'])
   ->middleware('auth:sanctum');
+
+// Category Route
+Route::get('/category-list', [CategoryController::class, 'index']);
+
+
+// Product
+Route::get('/product-list', [ProductController::class, 'product_index']);
+Route::get('/product/{id}', [ProductController::class, 'product_details']);
+Route::delete('/delete-product/{id}', [ProductController::class, 'destroy']);
+Route::post('/create-product', [ProductController::class, 'store']);
+Route::post('/edit-product/{id}', [ProductController::class, 'update']);
