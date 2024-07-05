@@ -13,8 +13,10 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::create(['category_name' => 'Coffee']);
-        Category::create(['category_name' => 'Sandwiches']);
+        Category::create(['category_name' => 'Main Course']);
+        Category::create(['category_name' => 'Appetizers']);
         Category::create(['category_name' => 'Desserts']);
+        Category::create(['category_name' => 'Side Dishes']);
+        Category::create(['category_name' => 'Beverages']);
     }
 }
