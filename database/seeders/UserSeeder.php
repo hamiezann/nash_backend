@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
         ],
         [
             'username' => 'Customer 1',
-            'email' => 'customer1@hmail.com',
+            'email' => 'customer1@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'role' => 'customer',
