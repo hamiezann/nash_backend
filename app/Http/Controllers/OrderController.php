@@ -17,9 +17,21 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $order = Order::with('user', 'orderProducts.product', 'payment')->get();
-        return response()->json($order, 200);
+        $orders = Order::with('user', 'orderProducts.product', 'payment')->get();
+    
+        // Append full URL to the image paths
+        foreach ($orders as $order) {
+            foreach ($order->orderProducts as $orderProduct) {
+                if ($orderProduct->product->image) {
+                    $orderProduct->product->image = asset('storage/' . $orderProduct->product->image);
+                }
+            }
+        }
+    
+        return response()->json($orders, 200);
     }
+    
+    
 
     /**
      * Store a newly created order in storage.
@@ -95,6 +107,24 @@ class OrderController extends Controller
 
         return response()->json(['message' => 'Order updated successfully.', 'order' => $order]);
     }
+
+    public function updateOrderStatus(Request $request, $orderId)
+    {
+        $request->validate([
+            'order_status' => 'required|string',
+        ]);
+    
+        $order = Order::find($orderId);
+        if ($order) {
+            $order->update([
+                'order_status' => $request->order_status,
+            ]);
+            return response()->json(['message' => 'Order status updated successfully.', 'order' => $order], 200);
+        } else {
+            return response()->json(['message' => 'Order not found.'], 404);
+        }
+    }
+    
 
     /**
      * Remove the specified order from storage.

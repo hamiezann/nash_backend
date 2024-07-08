@@ -33,4 +33,10 @@ class Order extends Model
     {
         return $this->belongsTo(Payment::class);
     }
+
+    public function ratings()
+    {
+    return $this->hasMany(Rating::class);
+    }
+
 }

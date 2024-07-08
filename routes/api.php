@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\RatingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -48,3 +51,15 @@ Route::post('/edit-category/{id}', [CategoryController::class, 'update']);
 
 //Order
 Route::get('/order-list', [OrderController::class, 'index']);
+Route::put('/update-order-status/{order}', [OrderController::class, 'updateOrderStatus']);
+
+//Payment
+Route::get('/payments', [PaymentController::class, 'index']);
+
+//Rating
+Route::get('/ratings-list', [RatingController::class, 'index']);
+
+//Analytics
+Route::get('/analytics/total-sales', [AnalyticsController::class ,'totalSales']);
+Route::get('/analytics/total-profit', [AnalyticsController::class ,'totalProfit']);
+Route::get('/analytics/best-selling-products', [AnalyticsController::class ,'bestSellingProducts']);
