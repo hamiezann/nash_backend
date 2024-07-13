@@ -31,6 +31,31 @@ class OrderController extends Controller
         return response()->json($orders, 200);
     }
     
+    public function belongsToUser($id, $status)
+    {
+        // Determine the query based on the status
+        $query = Order::where('user_id', $id)
+                      ->with('orderProducts.product', 'payment');
+    
+        if ($status === 'Past') {
+            $query->where('order_status', 'Completed');
+        } else if ($status === 'Upcoming') {
+            $query->whereIn('order_status', ['Preparing', 'Delayed']);
+        }
+    
+        $orders = $query->get();
+    
+        // Append full URL to the image paths
+        foreach ($orders as $order) {
+            foreach ($order->orderProducts as $orderProduct) {
+                if ($orderProduct->product->image) {
+                    $orderProduct->product->image = asset('storage/' . $orderProduct->product->image);
+                }
+            }
+        }
+    
+        return response()->json($orders, 200);
+    }
     
 
     /**
@@ -134,4 +159,22 @@ class OrderController extends Controller
         $order->delete();
         return response()->json(['message' => 'Order deleted successfully.']);
     }
+
+    public function getPendingAndDelayedOrders()
+{
+    $orders = Order::with('user', 'orderProducts.product', 'payment')
+                    ->whereIn('order_status', ['Preparing', 'Delayed'])
+                    ->get();
+
+    foreach ($orders as $order) {
+        foreach ($order->orderProducts as $orderProduct) {
+            if ($orderProduct->product->image) {
+                $orderProduct->product->image = asset('storage/' . $orderProduct->product->image);
+            }
+        }
+    }
+
+    return response()->json($orders, 200);
+}
+
 }

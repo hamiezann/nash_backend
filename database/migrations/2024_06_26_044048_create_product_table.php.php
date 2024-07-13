@@ -23,9 +23,11 @@ return new class extends Migration
             $table->foreign('category_id')->references('id')->on('category')->onDelete('cascade');
             $table->text('description');
             $table->decimal('price', 10, 2);
+            $table->decimal('product_cost', 10, 2);
             $table->string('image');
             $table->string('rating');
             $table->string('product_name');
+            $table->string('quantity_sold') ->nullable();
             $table->timestamps();
         });
     }

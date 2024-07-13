@@ -16,7 +16,7 @@ class OrderSeeder extends Seeder
     {
         DB::table('order')->insert([
             [
-                'user_id' => 1,
+                'user_id' => 2,
                 'order_status' => 'Preparing',
                 'total_amount' => 250.00,
                 'order_address' => '123 Main St, Anytown, USA',
@@ -25,7 +25,7 @@ class OrderSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'user_id' => 1,
+                'user_id' => 2,
                 'order_status' => 'Completed',
                 'total_amount' => 100.50,
                 'order_address' => '456 Elm St, Othertown, USA',
@@ -34,7 +34,7 @@ class OrderSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'user_id' => 1,
+                'user_id' => 2,
                 'order_status' => 'Preparing',
                 'total_amount' => 300.00,
                 'order_address' => '789 Oak St, Sometown, USA',
@@ -43,7 +43,7 @@ class OrderSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'user_id' => 1,
+                'user_id' => 2,
                 'order_status' => 'Completed',
                 'total_amount' => 150.75,
                 'order_address' => '101 Pine St, Anothertown, USA',
@@ -52,7 +52,7 @@ class OrderSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'user_id' => 1,
+                'user_id' => 2,
                 'order_status' => 'Completed',
                 'total_amount' => 200.00,
                 'order_address' => '202 Maple St, Yetanothertown, USA',

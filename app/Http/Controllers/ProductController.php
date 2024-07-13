@@ -45,6 +45,7 @@ class ProductController extends Controller
             'product_name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
+            'product_cost' => 'required|numeric',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate the image
             'rating' => 'required',
         ]);
@@ -61,6 +62,7 @@ class ProductController extends Controller
             'product_name' => $request->product_name,
             'description' => $request->description,
             'price' => $request->price,
+            'product_cost' => $request->product_cost,
             'image' => $imagePath, // Store the image path in the database
             'rating' => $request->rating,
         ]);
@@ -80,6 +82,7 @@ class ProductController extends Controller
             'product_name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
+            'product_cost' => 'required|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'rating' => 'required',
         ]);
@@ -101,6 +104,7 @@ class ProductController extends Controller
             'product_name' => $request->product_name,
             'description' => $request->description,
             'price' => $request->price,
+            'product_cost' => $request->product_cost,
             'rating' => $request->rating,
         ]);
     
@@ -121,5 +125,19 @@ public function destroy($id)
 
     return response()->json(null, 204);
 }
+
+public function getProductsByCategory($categoryId)
+    {
+        $products = Product::where('category_id', $categoryId)->get();
+        
+        // Append full URL to the image paths
+        foreach ($products as $product) {
+            if ($product->image) {
+                $product->image = asset('storage/' . $product->image);
+            }
+        }
+
+        return response()->json($products);
+    }
 
 }
